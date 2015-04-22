@@ -18,7 +18,7 @@
     <div id="container">
         <!----header--->
        <header>
-        <div id="titleposition"><a href="index.html">
+        <div id="titleposition"><a href="index.php">
            <h1><img class="pesLogo" src="images/pes.jpg"  width="104" height="80" alt="PES logo"><div id="title" >DRAW</div></h1>
 			
         </a></div>
