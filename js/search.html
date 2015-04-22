@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Book-o-Rama CAtalog Search</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1> Book-O-Rama Catalog search</h1>
+        
+        <form action="results.php" method="post">
+            Choose Search Type:</br>
+            <select name="searchtype">
+                <option value="author">Author</option>
+                <option value="title">Title</option>
+                <option value="isbn"ISBN</option>
+
+            </select>
+            <br/>
+            Enter Search Term:<br />
+            <input name="searchterm" type="text" size="40"/>
+            <br/>
+            <input type="submit" name="submit" value="Search"/>
+            
+        </form>
+        
+    </body>
+</html>

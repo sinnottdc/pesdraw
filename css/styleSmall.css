@@ -1,0 +1,610 @@
+@media screen and (max-width: 370px) {
+
+html, body {
+    margin: 0 auto;
+    min-height: 100%;
+	}
+	
+	html {
+	background: none;
+	}
+#title {
+clear: both;
+}
+
+#titleposition{
+padding-left: 8%;
+}
+
+body {
+    width: 291px;
+}
+
+#title {
+    clear: none;
+}
+
+td.table.flag {
+width: 100%;
+}
+
+.worldCupLink{
+border-right: none;
+padding-left: 8%;
+text-align: center;
+
+
+}
+
+.links{
+width: 40%;
+}
+
+.linkHome {
+width: 20%;
+}
+
+.linkEuro{
+width: 50%;
+text-align: center;
+
+
+}
+.hideMobile {
+	display: none;
+}
+
+.myTables {
+
+width: 70%;
+}
+footer {
+ clear: both;
+ position: relative;
+ z-index: 10;
+ height: 3em;
+ margin-top: -3em;
+}
+button {
+	height:68px;
+	margin-left: 5px;
+	margin-top: 4px;
+	position: fixed;
+	left: 72%;
+}
+
+#reset {
+margin-right: 0%;
+font-size: 1em;
+top: 373px;
+left: 72%;
+}
+
+
+
+#drawAll {
+top: 301px;
+left: 73.3%;
+}
+
+#pickTeam {
+
+	font-size: 1em;
+	top: 160px;
+	left: 73.5%;
+	
+	
+	
+}
+#draw{
+top: 230px;
+left: 72%;
+}
+
+#teamPicked {
+	
+	font-size: 13px;
+left: 72%;
+top: 154px;
+	
+}
+
+
+#backToTop {
+    top: 446px;
+    height: 110px;
+	left: 72%;
+}
+
+
+select {
+
+width: 23%;
+padding-left: 0%;
+height: 70px;
+position: fixed;
+left: 72%;
+top: 164px;
+}
+
+#buttonSpace{
+display: none;
+}
+
+table {
+    border-spacing: 46px 20px;
+	width: 107%;
+ }
+ 
+ p.about{
+ padding-bottom: 40px;
+ }
+ 
+ .buttonSpace {
+margin-top: 0px;
+ }
+ 
+#grpA.myTables {
+margin-top: 164px;
+}
+.topButton {
+visibility: hidden;
+}
+
+}
+
+@media screen and (max-width: 325px) {
+html  body{
+min-width: 250px;
+}
+
+tbody {
+display: table;
+}
+html {
+background: none;
+}
+
+body {
+    width: 280px;
+}
+
+.worldCupLink{
+border-right: none;
+padding-left: 3%;
+}
+table {
+    border-spacing: 46px 20px;
+	border-collapse: collapse;
+ }
+ 
+ td.table.flag {
+    width: 100%;
+    padding-left: 17%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#title{
+clear: left;
+}
+#reset {
+top: 456px;
+}
+img.pesLogo {
+    float: left;
+    margin-left: 7%;
+}
+#titleposition{
+padding-left: 23%;
+}
+
+
+#drawAll {
+top: 385px;
+}
+
+#pickTeam {
+
+top: 243px;
+	
+	
+	
+}
+#draw{
+top: 314px;
+}
+
+#teamPicked {
+	top: 238px;
+left: 73.5%;
+	
+}
+body {
+    width: 0px;
+}
+#backToTop {
+top: 533px;
+height: 126px;
+left: 72%;
+}
+
+select {
+
+
+top: 243px;
+}
+nav{
+top: 209px;
+}
+#grpA.myTables {
+margin-top: 269px;
+}
+#grpB.myTables {
+    margin-top: 25px;
+}
+.welcomeHeader {
+    padding-top: 226px;
+}
+.buttonSpace {
+    margin-top: -25px;
+}
+.topButton {
+visibility: hidden;
+}
+}
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) { /* STYLES GO HERE */
+html, body {
+    margin: 0 auto;
+    min-height: 100%;
+	}
+	
+	html {
+	background: none;
+	}
+#title {
+clear: both;
+}
+
+#titleposition{
+padding-left: 8%;
+}
+
+body {
+    width: 291px;
+}
+
+#title {
+    clear: none;
+}
+
+td.table.flag {
+width: 100%;
+}
+
+.worldCupLink{
+border-right: none;
+padding-left: 8%;
+
+
+}
+
+.links{
+width: 40%;
+}
+
+.linkHome {
+width: 20%;
+}
+
+.linkEuro{
+width: 57%;
+
+}
+.hideMobile {
+	display: none;
+}
+
+.myTables {
+
+width: 70%;
+}
+footer {
+ clear: both;
+ position: relative;
+ z-index: 10;
+ height: 3em;
+ margin-top: -3em;
+}
+button {
+	height:68px;
+	margin-left: 5px;
+	margin-top: 4px;
+	position: fixed;
+	left: 72%;
+}
+
+#reset {
+margin-right: 0%;
+font-size: 1em;
+top: 373px;
+left: 72%;
+}
+
+
+
+#drawAll {
+top: 301px;
+left: 73.3%;
+}
+
+#pickTeam {
+
+	font-size: 1em;
+	top: 160px;
+	left: 73.6%;
+	
+	
+	
+}
+#draw{
+top: 230px;
+left: 72%;
+}
+
+#teamPicked {
+	
+	font-size: 13px;
+left: 72%;
+top: 154px;
+	
+}
+
+
+#backToTop {
+    top: 446px;
+    height: 110px;
+	left: 72%;
+}
+
+
+.selectMobile {
+
+width: 23%;
+padding-left: 0%;
+height: 70px;
+position: fixed;
+left: 72%;
+top: 164px;
+}
+
+#buttonSpace{
+display: none;
+}
+
+table {
+    border-spacing: 46px 20px;
+	width: 107%;
+ }
+ 
+ p.about{
+ padding-bottom: 40px;
+ }
+ 
+ .buttonSpace {
+margin-top: 0px;
+ }
+ 
+#grpA.myTables {
+margin-top: 164px;
+}
+
+header {
+background: none;
+}
+.topButton {
+display: none;
+}
+
+}
+
+@media screen and (max-width: 325px) {
+html  body{
+min-width: 250px;
+}
+
+tbody {
+display: table;
+}
+html {
+background: none;
+}
+
+body {
+    width: 280px;
+}
+
+.worldCupLink{
+border-right: none;
+padding-left: 3%;
+}
+table {
+    border-spacing: 46px 20px;
+	border-collapse: collapse;
+ }
+ 
+ td.table.flag {
+    width: 100%;
+    padding-left: 17%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#title{
+clear: left;
+}
+#reset {
+top: 456px;
+}
+img.pesLogo {
+    float: left;
+    margin-left: 7%;
+}
+#titleposition{
+padding-left: 23%;
+}
+
+
+#drawAll {
+top: 385px;
+}
+
+#pickTeam {
+
+top: 243px;
+	
+	
+	
+}
+#draw{
+top: 314px;
+}
+
+#teamPicked {
+	top: 238px;
+left: 73.5%;
+	
+}
+body {
+    width: 0px;
+}
+#backToTop {
+top: 533px;
+height: 126px;
+left: 72%;
+}
+
+select {
+
+
+top: 243px;
+}
+nav{
+top: 209px;
+}
+#grpA.myTables {
+margin-top: 270px;
+}
+#grpB.myTables {
+    margin-top: 25px;
+}
+.welcomeHeader {
+    padding-top: 226px;
+}
+.buttonSpace {
+    margin-top: -25px;
+}
+html  body{
+min-width: 250px;
+}
+
+tbody {
+display: table;
+}
+html {
+background: none;
+}
+
+body {
+    width: 280px;
+}
+
+.worldCupLink{
+border-right: none;
+padding-left: 3%;
+}
+table {
+    border-spacing: 46px 20px;
+	border-collapse: collapse;
+ }
+ 
+ td.table.flag {
+    width: 100%;
+    padding-left: 17%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#title{
+clear: left;
+}
+#reset {
+top: 456px;
+}
+img.pesLogo {
+    float: left;
+    margin-left: 7%;
+}
+#titleposition{
+padding-left: 23%;
+}
+
+
+#drawAll {
+top: 385px;
+}
+
+#pickTeam {
+
+top: 243px;
+left: 73.6%;
+	
+	
+	
+}
+#draw{
+top: 314px;
+}
+
+#teamPicked {
+	top: 238px;
+left: 73.5%;
+	
+}
+body {
+    width: 0px;
+}
+.topButton {
+top: 533px;
+height: 126px;
+left: 72%;
+
+display: none;
+
+}
+
+select {
+
+left: 72.5%;
+top: 247px;
+width: 25%;
+}
+nav{
+top: 209px;
+}
+#grpA.myTables {
+margin-top: 270px;
+}
+#grpB.myTables {
+    margin-top: 25px;
+}
+.welcomeHeader {
+    padding-top: 226px;
+}
+.buttonSpace {
+    margin-top: -25px;
+}
+}
