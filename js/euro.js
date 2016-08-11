@@ -1,410 +1,85 @@
-// Object constructor
-function to(name, seedGroup, number) {
-    this.name = name;
-    this.seedGroup = seedGroup;
-    //this.seed = seed;
-    this.number = number;
+
+var $j = jQuery.noConflict();
+function getScreenSize1(){ 
+
+	screenWidthSize = $j(window).width()
+
+	if (screenWidthSize >= 416) {
+		screenWidth1 = true;
+	} else {
+		screenWidth1 = false;
+	}
+	return screenWidth1;
 }
 
-//Team object creations
-var austria = new to("Austria", 3, 0);
-var belgium = new to("Belgium", 1, 1);
-var bosnia = new to("Bosnia & Herz.", 2, 2);
-var bulgaria = new to("Bulgaria", 4, 3);
-var croatia = new to("Croatia", 2, 4);
-var czech = new to("Czech Republic", 3, 5);
-var denmark = new to("Denmark", 2, 6);
-var england = new to("England", 2, 7);
-var finland = new to("Finland", 4, 8);
-var france = new to("France", 1, 9);
-var germany = new to("Germany", 1, 10);
-var greece = new to("Greece", 2, 11);
-var hungary = new to("Hungary", 3, 12);
-var israel = new to("Israel", 4, 13);
-var italy = new to("Italy", 1, 14);
-var montenegro = new to("Montenegro", 4, 15);
-var netherlands = new to("Netherlands", 1, 16);
-var northernIreland = new to("N.Ireland", 4, 17);
-var norway = new to("Norway", 4, 18);
-var poland = new to("Poland", 4, 19);
-var portugal = new to("Portugal", 2, 20);
-var ireland = new to("Ireland", 4, 21);
-var romania = new to("Romania", 2, 22);
-var russia = new to("Russia", 2, 23);
-var scotland = new to("Scotland", 3, 24);
-var serbia = new to("Serbia", 3, 25);
-var slovakia = new to("Slovakia", 3, 26);
-var slovenia = new to("Slovenia", 3, 27);
-var spain = new to("Spain", 1, 28);
-var sweden = new to("Sweden", 3, 29);
-var switzerland = new to("Switzerland", 2, 30);
-var turkey = new to("Turkey", 3, 31);
-var ukraine = new to("Ukraine", 2, 32);
-var wales = new to("Wales", 4, 33);
+function scroll () {
+	getScreenSize1();
+	if (screenWidth1 == false) {
+		var a = element;
+		if (a < 4) {
+			$j("html, body").animate({scrollTop:0}, 300);
+		} else if (a >= 4 && a <= 7 ) {
+			$j("html, body").animate({scrollTop:38}, 300);
+		} else if (a >= 8  && a <= 11 ) {
+			$j("html, body").animate({scrollTop:460}, 300);
+		} else if (a >= 12  && a <= 15 ) {
+			$j("html, body").animate({scrollTop:700}, 300);
+		} else if (a >= 16 && a <= 19 ) {
+			$j("html, body").animate({scrollTop:1535}, 300);
+		} else if (a >= 20  && a <= 23 ) {
+			$j("html, body").animate({scrollTop:1700}, 300);
+		} else if (a >= 24  && a <= 27 ) {
+			$j("html, body").animate({scrollTop:1925}, 300);
+		} else if (a >= 28  && a <= 31 ) {
+			$j("html, body").animate({scrollTop:2200}, 300);
+		} 
+	} else {
+		return;
+	}
 
-var element = 0;
-var elementCounter = 0;
-var screenWidth = true;
-var scrollCounter = 0;
-var scrollId = 4;
-var numberOfTeams = 20; //used for the scroll function (-1 for 0 index)
+}
+(function($){
+window.addEventListener("load",function() {
+	window.scrollTo(0, 0);
+});
 
-var createImage = function(src, title) {
-  var img   = new Image();
-  img.src   = src;
-  img.alt   = title;
-  img.title = title;
-  return img; 
+if (window.matchMedia('(max-width: 415px)').matches) {
+	$('#backToTop').removeClass("topButton");
+	scrollButton();
 };
 
-// array of images
-var flagArray = [];
+var isVisible = false;
 
-// push two images to the array
-//images.push(createImage("images/Austria.jpg", "Austria"));
-for (flags=0; flags<=33; flags++) {
-flagArray.push(createImage("images/euroFlags/" + [flags] +".png"));
+
+window.onresize = checkWindowWidth;
+
+function checkWindowWidth() {
+
+	if (window.matchMedia('(max-width: 370px)').matches) {
+		$('#backToTop').removeClass("topButton");
+	} else {
+		$('#backToTop').addClass("topButton");
+	}
 }
-/*var flagArray = new Array();
-for (flags=0; flags<=33; flags++) {
-flagArray[flags] = new Image();
-flagArray[flags].src = images/euroFlags/[flags].png;
+
+
+
+function scrollButton(){
+	$('#backToTop').click(function(){
+		$("html, body").animate({scrollTop:0}, 300);
+	});
+
+//	when scrolled to certain point, show button
+	$(window).scroll(function(){
+		var shouldBeVisible = $(window).scrollTop()>70;
+		if (shouldBeVisible && !isVisible) {
+			isVisible = true;
+			$('#backToTop').show();
+		} else if (isVisible && !shouldBeVisible) {
+			isVisible = false;
+			$('#backToTop').hide();
+		}
+	});
 }
-*/
-//Function to pick random teams from each seed group & input into table
-$(document).ready(function() {
-
-    //used for table positions for teams not in draw
-    function randNumber(max) {
-        rndNumb = Math.floor((Math.random() * max) + 1);
-        return rndNumb;
-    }
-
-    //used for table positions for teams not in draw
-    function randTablePos(min, max) {
-        rndTabPos = Math.floor((Math.random() * (max - min + 1)) + min);
-        return rndTabPos;
-    }
-
-    //reset button function
-    function reset() {
-		scrollCounter = 0;
-        drawfull(); //re-run draw
-        $('td').removeClass("red");
-        $('td').addClass("hide");
-        element = 0;
-		elementCounter = 0;
-        $('select').hide();
-        $('#pickTeam').show();
-        $("#teamPicked").hide();
-        pickedTeams = []; // reset picked teams array as it was causing issues if not
-		 $("html, body").animate({scrollTop:0}, 300);
-    }
-
-    //draw all teams button
-    function drawAllTeams() {
-        $("select").hide();
-        $('td').removeClass("hide");
-        $('#pickTeam').hide();
-        $('#teamPicked').show().html('Draw complete');
-        element = 16;
-    }
-
-	//originally used to change draw style for mobile but decided against. Changed screenwidth to always true so easier to revert if wanted
-		function getScreenSize(){ 
-	
-		screenWidthSize = $(window).width()
-		
-		if (screenWidthSize >= 730) {
-		screenWidth = true;
-		} else {
-		screenWidth = true;
-		}
-		return screenWidth;
-		}
-		
-		
-    //draw teams individually button
-   function drawIndividual() {
-	if (element==0) {
-		getScreenSize();}
-        $("select").hide();
-        $('#pickTeam').hide();
-        $('#teamPicked').show().html('Draw in progress');
-		$('td:eq(' + element + ')').removeClass("hide");
-		if (screenWidth==true) {
-		elementCounter++;
-		element = element + 4;
-		if (elementCounter==4) {
-			element = 1;
-			} else if (elementCounter==8) {
-			element = 2;
-			} else if (elementCounter==12) {
-			element = 3;
-			} 
-		
-        if (element >= 16) { //show team picked on button
-            $('#teamPicked').show().html('Draw complete');
-			
-        };
-		
-		} else {
-		element++;
-	
-        if (element >= 16) { //show team picked on button
-            $('#teamPicked').show().html('Draw complete');
-        };
-		
-		}
-		scroll();
-		return elementCounter;
-    }
-
-
-
-    //function for drawing all teams based on seed/seedgroup
-    function drawfull() {
-
-        //Knuth shuffle function to mix up arrays
-        function shuffle(array) {
-            var currentIndex = array.length,
-                temporaryValue, randomIndex;
-
-            //while elements remain to be shuffled
-            while (0 !== currentIndex) {
-
-                // pick a remaining element
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
-
-                //Swap it with current element
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-            return array;
-        }
-
-        //seed groups
-        var seedOne = [france, germany, italy, netherlands, belgium, spain]; // 6 teams 
-        var seedTwo = [portugal, greece, croatia, bosnia, england, switzerland, ukraine, russia, denmark, romania, ]; // 10 teams
-        var seedThree = [scotland, sweden, serbia, turkey, hungary, czech, slovenia, austria, slovakia, ]; //  9 teams
-        var seedFour = [montenegro, norway, finland, poland, ireland, israel, bulgaria, northernIreland, wales]; // 9 teams
-        shuffle(seedOne);
-        shuffle(seedTwo);
-        shuffle(seedThree);
-        shuffle(seedFour);
-
-        //organise arrays into alphabetical order for select list
-        drawnTeams = [];
-        allTeams = seedOne.concat(seedTwo, seedThree, seedFour);
-        allTeams.sort(function(a, b) {
-            var nameA = a.name.toUpperCase();
-            var nameB = b.name.toUpperCase();
-            return (nameA < nameB) ? -1 : nameA > nameB ? 1 : 0;
-        });
-
-
-        //noTeams = how many teams to pick / teams = name of array / tablePosition = td position in dom 
-        function draw(noTeams, teams, tablePosition) {
-            noTeams = noTeams - 1;
-            for (i = 0, x = 0; i <= noTeams; i++, x++) {
-                var j = teams[x];
-                $('.myTables').find('td').eq(i + tablePosition).text(j.name).prepend(flagArray[j.number]).addClass("flag");
-				tablePosition = tablePosition + 3;
-            };
-
-        }
-
-        //positions 1 for each group - Containing 3 or 4 teams from seed 1 & possibly 1 team from seed 2 
-        (function() {
-            shuffle(seedTwo);
-            remainingSeedTwo = seedTwo.splice(3, 4) //take 4 teams from seed 2 for round 3 & 4 draw (to avoid top seed picked in later rounds)
-            var b = seedTwo.splice(5, 1); // pick 1 team from seed 2 so possibility of 2nd seed team getting in no.1 position.
-            var finalTeamsA = b.concat(seedOne); // adding 1 team from seed 2 to seed 1 array
-            shuffle(finalTeamsA); // shuffle the array
-            remainingTopSeeds = finalTeamsA.splice(3, 3); // slice 4 teams and put them into position 1 of each group. Return remaining teams
-            shuffle(finalTeamsA); // shuffle array for random positions else seed 2 will always go into group D if picked.
-            draw(4, finalTeamsA, 0); //position 1-4 draw}
-            drawnTeams = drawnTeams.concat(finalTeamsA);
-        })();
-
-        //positions 2 for each group - Containing remaining teams from seed 1 all teams from seed 2 & possibly 2 from seed 3
-        (function() {
-            var b = seedThree.splice(7, 2); //7 Add possible 2 teams from seed 3 top possibly be drawn in round 2 b = 2
-            var c = remainingTopSeeds.concat(seedTwo); //remainingTopSeeds = 4 ..seedTwo = 5  c = 9
-            roundTwo = b.concat(c); // roundTwo = 11
-            shuffle(roundTwo);
-            var a = roundTwo.splice(6, 4);
-            draw(4, a, 1);
-            drawnTeams = drawnTeams.concat(a);
-        })();
-
-
-
-        (function() {
-            remainingSeedThree = seedThree.splice(5, 2)
-            b = remainingSeedTwo.concat(seedThree); // 7 + 4
-            shuffle(b);
-            var a = seedFour.splice(6, 2);
-            seedThreeFinal = a.concat(b);
-            shuffle(seedThreeFinal);
-            var c = seedThreeFinal.splice(4, 4);
-            draw(4, c, 2);
-            drawnTeams = drawnTeams.concat(c);
-        })();
-
-        (function() {
-            a = remainingSeedThree.concat(seedThreeFinal);
-            shuffle(a);
-            a = a.splice(3, 4);
-            draw(4, a, 3);
-            drawnTeams = drawnTeams.concat(a);
-        })();
-    };
-    drawfull();
-
-
-
-    //pick team button
-    $("#teamPicked").hide();
-    $("select").hide();
-
-
-    //select team from dynamically created select list
-    $("#pickTeam").click(function() {
-		getScreenSize();
-		if (screenWidth==true) {
-        $("#pickTeam").hide();
-        $("select").show();
-        var options = '<option value="blank">Pick team</option>';
-        for (var i = 0; i < allTeams.length; i++) {
-            options += '<option value=' + allTeams[i].number + ' data-image="images/euroFlags/"' + [i] + '>' + allTeams[i].name + '</option>'
-        };
-
-        $('select').html(options);} else {
-			$("#pickTeam").hide();
-        $("select").show();
-        var options = '<option value="blank">Pick</option>';
-        for (var i = 0; i < allTeams.length; i++) {
-            options += '<option value=' + allTeams[i].number + '>' + allTeams[i].name + '</option>'
-        };
-        $('select').html(options);}
-
-    });
-
-    $('select').change(function() { //take selected option
-
-
-        pickedTeams = drawnTeams; //had to assign to a new array. Causing issues (##need to find out why##)
-        var optionSelected = $(this).find("option:selected");
-        var valueSelected = optionSelected.val();
-        var parsedValue = parseInt(valueSelected);
-        var textSelected = optionSelected.text();
-
-        checkSelect = valueSelected;
-
-
-        //if team not in primary draw decide where to put team selected depending on their seed/seedgroup
-        tablePos = 0;
-        if (allTeams[parsedValue].seedGroup == 1) {
-            var x = randNumber(10);
-            if (x <= 7) {
-                tablePos = randTablePos(0, 3);
-            } else if (x >= 8 && x <= 9) {
-                tablePos = randTablePos(4, 7);
-            } else if (x == 10) {
-                tablePos = randTablePos(8, 11);
-            } else {
-                return false;
-            }
-        }
-
-        if (allTeams[parsedValue].seedGroup == 2) {
-            var x = randNumber(10);
-            if (x <= 2) {
-                tablePos = randTablePos(0, 3);
-            } else if (x >= 3 && x <= 8) {
-                tablePos = randTablePos(4, 7);
-            } else if (x >= 8 && x <= 10) {
-                tablePos = randTablePos(8, 11);
-            } else {
-                return false;
-            }
-        }
-
-
-        if (allTeams[parsedValue].seedGroup == 3) {
-            var x = randNumber(10);
-            if (x <= 1) {
-                tablePos = randTablePos(4, 7);
-            } else if (x >= 2 && x <= 8) {
-                tablePos = randTablePos(8, 11);
-            } else if (x >= 9 && x <= 10) {
-                tablePos = randTablePos(12, 15);
-            } else {
-                return false;
-            }
-        }
-
-        if (allTeams[parsedValue].seedGroup == 4) {
-            var x = randNumber(10);
-            if (x <= 2) {
-                tablePos = randTablePos(8, 11);
-            } else if (x >= 2 && x <= 10) {
-                tablePos = randTablePos(12, 15);
-            } else {
-                return false;
-            }
-        }
-
-        //is team in the draw already? If it is highlight red if it isnt put into draw using table pos number generated by above.
-        var inDraw = false;
-        for (i = 0; i <= 15; i++) {
-            if (textSelected == pickedTeams[i].name) {
-                inDraw = true;
-                $("td:contains('" + textSelected + "')").addClass("red");
-				
-                break;
-            }
-
-        };
-		
-		flagValue = allTeams[parsedValue].number;
-        if (inDraw == false) {
-            $('td').eq(tablePos).text(textSelected).prepend(flagArray[flagValue]).addClass('red');
-        }
-
-        $("select").hide();
-
-        $(function() {
-            $("#teamPicked").html("" + textSelected + " picked").show();
-        });
-
-       // event.stopPropagation(); //test if removal causes issues
-
-
-    });
-
-
-    //draw button
-    $('#draw').click(function() {
-        drawIndividual();
-    });
-
-    //draw all teams button
-    $('#drawAll').click(function() {
-        drawAllTeams();
-    });
-
-    //reset button
-    $('#reset').click(function() {
-        reset();
-    });
-
-    (function() {
-        $("#pickTeam").show();
-        $("select").hide();
-    });
-
-});
+})(jQuery)
+function drawfull(){this.drawEuro=function(){var c={allTeams:[france,germany,italy,netherlands,belgium,spain,portugal,greece,croatia,bosnia,england,switzerland,ukraine,russia,denmark,romania,scotland,sweden,serbia,turkey,hungary,czech,slovenia,austria,slovakia,albania,norway,iceland,poland,ireland,israel,bulgaria,northernIreland,wales],seedOne:[],seedTwo:[],seedThree:[],seedFour:[],drawnTeams:[]};utils.sortSeedGroups(c.seedOne,c.seedTwo,c.seedThree,c.seedFour,c.allTeams),utils.shuffle(c.seedOne),utils.shuffle(c.seedTwo),utils.shuffle(c.seedThree),utils.shuffle(c.seedFour),utils.sortArrays(c.allTeams),function(){utils.shuffle(c.seedTwo),remainingSeedTwo=c.seedTwo.splice(3,4);var a=c.seedTwo.splice(5,1),b=a.concat(c.seedOne);utils.shuffle(b),remainingTopSeeds=b.splice(3,3),utils.shuffle(b),draw(4,b,0),c.drawnTeams=c.drawnTeams.concat(b),s1=utils.shuffle(b)}(),function(){var a=c.seedThree.splice(7,2),b=remainingTopSeeds.concat(c.seedTwo);roundTwo=a.concat(b),utils.shuffle(roundTwo);var d=roundTwo.splice(6,4);draw(4,d,1),c.drawnTeams=c.drawnTeams.concat(d),s2=utils.shuffle(d)}(),function(){remainingSeedThree=c.seedThree.splice(5,2),b=remainingSeedTwo.concat(c.seedThree),utils.shuffle(b);var a=c.seedFour.splice(6,2);seedThreeFinal=a.concat(b),utils.shuffle(seedThreeFinal);var d=seedThreeFinal.splice(4,4);draw(4,d,2),c.drawnTeams=c.drawnTeams.concat(d),s3=utils.shuffle(d)}(),function(){a=remainingSeedThree.concat(seedThreeFinal),utils.shuffle(a),a=a.splice(3,4),draw(4,a,3),c.drawnTeams=c.drawnTeams.concat(a),s4=utils.shuffle(a)}(),this.allTeams=c.allTeams,this.drawnTeams=c.drawnTeams},this.drawEuro2016=function(){var c={allTeams:[france,germany,italy,netherlands,belgium,spain,portugal,greece,croatia,bosnia,england,switzerland,ukraine,russia,denmark,romania,scotland,sweden,serbia,turkey,hungary,czech,slovenia,austria,slovakia,iceland,norway,albania,poland,ireland,israel,bulgaria,northernIreland,wales],seedOne:[],seedTwo:[],seedThree:[],seedFour:[],drawnTeams:[]};utils.sortSeedGroups(c.seedOne,c.seedTwo,c.seedThree,c.seedFour,c.allTeams),utils.shuffle(c.seedOne),utils.shuffle(c.seedTwo),utils.shuffle(c.seedThree),utils.shuffle(c.seedFour),utils.sortArrays(c.allTeams),function(){remainingSeedTwo=c.seedTwo.splice(3,4);var a=c.seedTwo.splice(1,2),b=a.concat(c.seedOne);utils.shuffle(b),remainingTopSeeds=b.splice(6,4),utils.shuffle(b),draw(6,b,0),c.drawnTeams=c.drawnTeams.concat(b),s1=utils.shuffle(b)}(),function(){var a=c.seedThree.splice(5,4),b=remainingTopSeeds.concat(c.seedTwo);roundTwo=a.concat(b),utils.shuffle(roundTwo);var d=roundTwo.splice(4,6);draw(6,d,1),c.drawnTeams=c.drawnTeams.concat(d),s2=utils.shuffle(d)}(),function(){remainingSeedThree=c.seedThree.splice(2,2),b=remainingSeedTwo.concat(c.seedThree),utils.shuffle(b);var a=c.seedFour.splice(6,2);seedThreeFinal=a.concat(b),utils.shuffle(seedThreeFinal);var d=seedThreeFinal.splice(2,6);draw(6,d,2),c.drawnTeams=c.drawnTeams.concat(d),s3=utils.shuffle(d)}(),function(){a=remainingSeedThree.concat(seedThreeFinal),utils.shuffle(a),fourth=a.concat(c.seedFour),a=fourth.splice(5,6),draw(6,a,3),c.drawnTeams=c.drawnTeams.concat(a),s4=utils.shuffle(a)}(),this.allTeams=c.allTeams,this.drawnTeams=c.drawnTeams},this.drawWorld=function(){function b(a){for(groupA=[],groupB=[],groupC=[],groupD=[],groupE=[],groupF=[],groupG=[],groupH=[],i=0;i<16;i++){var b=a.splice(i,1);groupA=groupA.concat(b),groupB=a}for(i=0;i<8;i++){var c=groupA.splice(i,1);groupC=groupC.concat(c);var d=groupB.splice(i,1);groupD=groupD.concat(d)}for(i=0;i<4;i++){var e=groupA.splice(i,1);groupE=groupE.concat(e);var f=groupB.splice(i,1);groupF=groupF.concat(f);var g=groupC.splice(i,1);groupG=groupG.concat(g);var h=groupD.splice(i,1);groupH=groupH.concat(h)}}function c(a){return x=a.splice(1,3),utilsWC.shuffle(x),a=a.concat(x)}function d(a){var b=7;for(j=0;j<7;j++){var c=0;for(i=0;i<=3;i++)if(1==a[j][i].region&&c++,c>=3)for(removedEuro=a[j].splice(3,1),t=b;t>=0;t--){var d=!1;if(4==a[t][0].region&&(d=!0,swapTeam=a[t].splice(1,1),a[t]=a[t].concat(removedEuro),a[j]=a[j].concat(swapTeam)),1==d){i=0,c=0,b=t-1;break}}}return a}function e(a){for(j=0;j<7;j++){var b=0,c=0,d=0,e=0;for(i=0;i<=3;i++)if(2==a[j][i].region?b++:3==a[j][i].region?c++:4==a[j][i].region?d++:5==a[j][i].region&&e++,b>=2||c>=2||d>=2||e>=2){removed=a[j].splice(1,1),toReplace=l.splice(0,1),a[j]=a[j].concat(toReplace);break}}return a}function w(a,b){for(i=0;i<4;i++)flagValue=a[i].number,jQuery(".myTables").find("td").eq(b).text(a[i].name).prepend(flagArray.flagsG[flagValue]).addClass("flag"),b++,drawnTeamsWC.push(a[i])}var a={allTeams:[france,germany,italy,netherlands,belgium,spain,portugal,greece,croatia,bosnia,england,switzerland,ukraine,russia,denmark,romania,scotland,sweden,serbia,turkey,hungary,czech,slovenia,austria,slovakia,iceland,norway,albania,poland,ireland,israel,bulgaria,northernIreland,wales,brazil,argentina,colombia,uruguay,chile,costaRica,mexico,algeria,ivoryCoast,nigeria,ghana,egypt,tunisia,cameroon,burkinaFaso,guinea,mali,morocco,senegal,southAfrica,zambia,honduras,jamaica,panama,usa,bolivia,ecuador,paraguay,peru,venezuela,japan,southKorea,uae,australia,china,iraq,kuwait,lebanon,oman,northKorea,qatar,saudiArabia,thailand,newZealand,iran,uzbekistan,jordan],seedOne:[],seedTwo:[],seedThree:[],seedFour:[],drawnTeams:[]},f=[brazil,argentina,germany,spain],g=[colombia,uruguay,belgium,netherlands],h=[italy,france,portugal],k=[chile,costaRica,mexico],l=[switzerland,greece,croatia,england,czech,sweden,denmark],m=[scotland,serbia,turkey,bosnia,hungary,romania,ukraine,russia,austria],n=[albania,norway,iceland,poland,ireland,israel,bulgaria,northernIreland,wales,slovenia,slovakia],o=[algeria,ivoryCoast,nigeria,ghana,egypt,tunisia,cameroon,burkinaFaso],p=[guinea,mali,morocco,senegal,southAfrica,zambia],q=[honduras,jamaica,panama,usa],r=[],s=[bolivia,ecuador,paraguay,peru,venezuela],u=[japan,southKorea,uae,australia],v=[china,iraq,kuwait,lebanon,oman,northKorea,qatar,saudiArabia,thailand,newZealand,iran,uzbekistan,jordan];for(drawnTeams=[],drawnTeamsWC=[],pickedTeams=[],allTeams=f.concat(g,h,k,l,m,n,o,p,q,r,s,u,v),allTeams.sort(function(a,b){var c=a.name.toUpperCase(),d=b.name.toUpperCase();return c<d?-1:c>d?1:0}),function(){var a=[f,g,h,k,l,m,n,o,p,q,r,s,u,v];for(i=0;i<a.length;i++)utilsWC.shuffle(a[i])}(),function(){var a=utilsWC.randNumber(100);if(a>=96){var b=f.splice(3,1),c=g.splice(3,1);if(1==b[0].region){l=l.concat(b);var d=h.splice(2,1);f=f.concat(d)}else{r=r.concat(b);var e=k.splice(2,1);f=f.concat(e)}if(1==c[0].region){l=l.concat(c);var j=h.splice(1,1);g=g.concat(j)}else{r=r.concat(c);var m=k.splice(1,1);g=g.concat(m)}l=l.concat(h),r=r.concat(k)}else if(a>=86&&a<=95){var n=g.splice(1,3),o=n.length;for(i=0;i<o;i++)if(1==n[i].region){l=l.concat(n[i]);var p=h.splice(h.length-1,1);g=g.concat(p)}else{r=r.concat(n[i]);var q=k.splice(k.length-1,1);g=g.concat(q)}l=l.concat(h),r=r.concat(k)}else if(a>=71&&a<=85){var n=g.splice(2,2),o=n.length;for(i=0;i<o;i++)if(1==n[i].region){l=l.concat(n[i]);var p=h.splice(h.length-1,1);g=g.concat(p)}else{r=r.concat(n[i]);var q=k.splice(k.length-1,1);g=g.concat(q)}l=l.concat(h),r=r.concat(k)}else if(a>=50&&a<=70){var n=g.splice(3,1),o=n.length;for(i=0;i<o;i++)if(1==n[i].region){l=l.concat(n[i]);var p=h.splice(h.length-1,1);g=g.concat(p)}else{r=r.concat(n[i]);var q=k.splice(k.length-1,1);g=g.concat(q)}l=l.concat(h),r=r.concat(k)}else l=l.concat(h),r=r.concat(k);drawnTeams=f.concat(g),utilsWC.shuffle(drawnTeams)}(),function(){sAmericaLength=r.length,sAmerica=r.splice(sAmericaLength-2,2),sAmerica_2=s.splice(3,2),sAmerica=sAmerica.concat(sAmerica_2),utilsWC.shuffle(sAmerica),drawnTeams=drawnTeams.concat(sAmerica)}(),function(){africa_1=o.splice(4,4),africa_2=p.splice(5,1),africa=africa_1.concat(africa_2),utilsWC.shuffle(africa),drawnTeams=drawnTeams.concat(africa)}(),function(){asia_1=u.splice(2,2),asia_2=v.splice(7,1),asia=asia_1.concat(asia_2),utilsWC.shuffle(asia),drawnTeams=drawnTeams.concat(asia)}(),function(){utilsWC.shuffle(q),ncAmerica_1=q.splice(2,2),drawnTeams=drawnTeams.concat(ncAmerica_1)}(),function(){var a=utilsWC.randNumber(100);a<=40?(euro_1=l.splice(2,8),euro_2=m.splice(8,1),euro_3=n.splice(8,1),euro=euro_1.concat(euro_2,euro_3),utilsWC.shuffle(euro)):a>=41&&a<=70?(euro_1=l.splice(3,7),euro_2=m.splice(7,2),euro_3=n.splice(8,1),euro=euro_1.concat(euro_2,euro_3),utilsWC.shuffle(euro)):(euro_1=l.splice(4,6),euro_2=m.splice(6,3),euro_3=n.splice(8,1),euro=euro_1.concat(euro_2,euro_3),utilsWC.shuffle(euro)),drawnTeams=drawnTeams.concat(euro)}(),b(drawnTeams),allGroups=[groupA,groupB,groupC,groupD,groupE,groupF,groupG,groupH],d(allGroups),e(allGroups),ex=0;ex<7;ex++)allGroups[ex]=c(allGroups[ex]);for(utilsWC.shuffle(allGroups),x=0,y=0;x<=7;x++,y+=4)w(allGroups[x],y);utilsWC.sortArrays(a.allTeams),this.allTeams=a.allTeams,this.drawnTeams=a.drawnTeams}}function team(a,b,c,d){this.name=a,this.seedGroup=b,this.number=c,this.region=d}function draw(a,b,c){a-=1;for(var d=0,e=0;d<=a;d++,e++){var f=b[e];jQuery(".myTables").find("td").eq(d+c).text(f.name).prepend(flagArray.flagsG[f.number]).addClass("flag"),c+=3}}function generate_flags(a){var b=[];for("euro"==a||"euro16"==a?numTeams=33:"world"==a&&(numTeams=80),"euro16"==a&&(a="euro"),createImage=function(a,b){return img=new Image,img.src=a,img.alt=b,img.title=b,img},flags=0;flags<=numTeams;flags++)b.push(createImage("/pesdraw1/pesdraw/images/"+a+"Flags/"+[flags]+".png"));this.flagsG=b}function buttons(){this.reset=function(){"euro"==zone?drawfull.drawEuro():"euro16"==zone?drawfull.drawEuro2016():drawfull.drawWorld(),jQuery("td").removeClass("red"),jQuery("td.table").addClass("hide"),element=0,elementCounter=0,this.createSelect(),jQuery("#teamPicked").hide(),pickedTeams=[],window.matchMedia("(max-width: 370px)").matches&&jQuery("html, body").animate({scrollTop:0},300)},this.createSelect=function(){jQuery("#pickTeam").hide(),jQuery("select").show();for(var a='<option value="blank">Pick team</option>',b=0;b<drawfull.allTeams.length;b++)a+="<option value="+drawfull.allTeams[b].number+' data-image="images/euroFlags/"'+[b]+">"+drawfull.allTeams[b].name+"</option>";jQuery("select").html(a)}}function utils(){this.randNumber=function(a){var b;return b=Math.floor(Math.random()*a+1)},this.shuffle=function(a){var b,c,d;for(b=a.length,c;0!==b;)c=Math.floor(Math.random()*b),b-=1,d=a[b],a[b]=a[c],a[c]=d;return a},this.getScreenSize=function(){return screenWidthSize=$(window).width(),screenWidth=screenWidthSize>=730},this.randTablePos=function(a,b){return rndTabPos=Math.floor(Math.random()*(b-a+1)+a),rndTabPos},this.sortSeedGroups=function(a,b,c,d,e){for(var f=0;f<=e.length-1;f++){var g=e[f].seedGroup;1==g?a.push(e[f]):2==g?b.push(e[f]):3==g?c.push(e[f]):4==g&&d.push(e[f])}},this.sortArrays=function(a){a.sort(function(a,b){var c=a.name.toUpperCase(),d=b.name.toUpperCase();return c<d?-1:c>d?1:0})}}function displayDraw(a){this.drawAllTeams=function(){jQuery("select").hide(),jQuery("td").removeClass("hide"),jQuery("#pickTeam").hide(),jQuery("#teamPicked").show().html("Draw complete"),"world"==zone?element=32:element=16},this.drawIndividual=function(){return jQuery("select").hide(),jQuery("#pickTeam").hide(),jQuery("#teamPicked").show().html("Draw in progress"),jQuery("td:eq("+element+")").removeClass("hide"),"euro"==zone?(elementCounter++,element+=4,4==elementCounter?element=1:8==elementCounter?element=2:12==elementCounter&&(element=3),element>=16&&jQuery("#teamPicked").show().html("Draw complete"),elementCounter):"euro16"==zone?(elementCounter++,element+=4,6==elementCounter?element=1:12==elementCounter?element=2:18==elementCounter&&(element=3),element>=24&&jQuery("#teamPicked").show().html("Draw complete"),elementCounter):"world"==zone&&(jQuery("select").hide(),jQuery("#pickTeam").hide(),jQuery("#teamPicked").show().html("Draw in progress"),jQuery("td:eq("+element+")").removeClass("hide"),1==screenWidth)?(elementCounter++,element+=4,8==elementCounter?element=1:16==elementCounter?element=2:24==elementCounter&&(element=3),element>=32&&jQuery("#teamPicked").show().html("Draw complete"),elementCounter):void 0},this.displayseed=function(a){for(i=0;i<a.length;i++)seedTeam=a[i],jQuery(".seed_display").find("td").eq(i).text(seedTeam)}}var austria=new team("Austria",3,0),belgium=new team("Belgium",1,1),bosnia=new team("Bosnia & Herz.",2,2),bulgaria=new team("Bulgaria",4,3),croatia=new team("Croatia",2,4),czech=new team("Czech Republic",3,5),denmark=new team("Denmark",2,6),england=new team("England",2,7),iceland=new team("Iceland",4,8),france=new team("France",1,9),germany=new team("Germany",1,10),greece=new team("Greece",2,11),hungary=new team("Hungary",3,12),ireland=new team("Ireland",4,13),israel=new team("Israel",4,14),italy=new team("Italy",1,15),albania=new team("Albania",4,16),northernIreland=new team("N.Ireland",4,17),netherlands=new team("Netherlands",1,18),norway=new team("Norway",4,19),poland=new team("Poland",4,20),portugal=new team("Portugal",2,21),romania=new team("Romania",2,22),russia=new team("Russia",2,23),scotland=new team("Scotland",3,24),serbia=new team("Serbia",3,25),slovakia=new team("Slovakia",3,26),slovenia=new team("Slovenia",3,27),spain=new team("Spain",1,28),sweden=new team("Sweden",3,29),switzerland=new team("Switzerland",2,30),turkey=new team("Turkey",3,31),ukraine=new team("Ukraine",2,32),wales=new team("Wales",4,33);element=0;var elementCounter=0,screenWidth=!0,zone="euro16",flagArray=new generate_flags(zone),buttons=new buttons,utils=new utils,drawfull=new drawfull,displayDraw=new displayDraw;jQuery(function(a){a(document).ready(function(){drawfull.drawEuro2016(),jQuery("#teamPicked").hide(),buttons.createSelect(),a("select").change(function(){pickedTeams=drawfull.drawnTeams;var b=a(this).find("option:selected"),c=b.val(),d=parseInt(c),e=b.text();if(checkSelect=c,tablePos=0,1==drawfull.allTeams[d].seedGroup){var f=utils.randNumber(100);if(f<=70)tablePos=utils.randTablePos(0,5);else if(f>=71&&f<=99)tablePos=utils.randTablePos(6,11);else{if(100!=f)return!1;tablePos=utils.randTablePos(12,17)}}if(2==drawfull.allTeams[d].seedGroup){var f=utils.randNumber(100);if(f<=35)tablePos=utils.randTablePos(0,5);else if(f>=36&&f<=90)tablePos=utils.randTablePos(6,11);else{if(!(f>=91&&f<=100))return!1;tablePos=utils.randTablePos(12,17)}}if(3==drawfull.allTeams[d].seedGroup){var f=utils.randNumber(100);if(f<=7)tablePos=utils.randTablePos(6,11);else if(f>=8&&f<=30)tablePos=utils.randTablePos(12,17);else{if(!(f>=31&&f<=100))return!1;tablePos=utils.randTablePos(18,23)}}if(4==drawfull.allTeams[d].seedGroup){var f=utils.randNumber(100);if(f<=1)tablePos=utils.randTablePos(12,17);else{if(!(f>=2&&f<=100))return!1;tablePos=utils.randTablePos(18,23)}}var g=!1;for(i=0;i<=23;i++)e==pickedTeams[i].name&&(g=!0,a("td:contains('"+e+"')").addClass("red"));0==g&&a("td").eq(tablePos).text(e).prepend(flagArray.flagsG[d]).addClass("red");var h=[];a("#tables").find("tr").each(function(){for(f=a(this).find("td.table").text(),h.push(f),i=0;i<=h.length;i++)""==h[i]&&h.splice(i,1)}),displayDraw.displayseed(h),a("select").hide(),a(function(){a("#teamPicked").html(""+e+" picked").show()}),selectedTeam=drawfull.allTeams[d]}),a("#pickTeam").click(function(){buttons.createSelect()}),a("#draw").click(function(){scroll(),displayDraw.drawIndividual()}),a("#drawAll").click(function(){displayDraw.drawAllTeams()}),a("#reset").click(function(){buttons.reset()})})});
